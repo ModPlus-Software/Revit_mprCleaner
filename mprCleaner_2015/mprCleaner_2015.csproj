@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8175F288-BB78-4C4E-A1F7-077C1A3D6BEB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>mprCleaner</RootNamespace>
+    <AssemblyName>mprCleaner_2015</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;R2015</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;R2015</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ModPlusAPI">
+      <HintPath>..\..\..\..\..\..\..\ModPlus\Extensions\ModPlusAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ModPlusStyle">
+      <HintPath>..\..\..\..\..\..\..\ModPlus\Extensions\ModPlusStyle.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="RevitAPI">
+      <HintPath>C:\_Revit dlls\2015\RevitAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="RevitAPIUI">
+      <HintPath>C:\_Revit dlls\2015\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ResultWindow.xaml.cs">
+      <DependentUpon>ResultWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WipeOptionsSelector.xaml.cs">
+      <DependentUpon>WipeOptionsSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WipeOptions\HelperMethods.cs" />
+    <Compile Include="WipeOptions\RemoveAllAreaPlans.cs" />
+    <Compile Include="WipeOptions\RemoveAllAreas.cs" />
+    <Compile Include="WipeOptions\RemoveAllAreaSeparationLines.cs" />
+    <Compile Include="WipeOptions\RemoveAllConstraints.cs" />
+    <Compile Include="WipeOptions\RemoveAllDetailSection.cs" />
+    <Compile Include="WipeOptions\RemoveAllDrafting.cs" />
+    <Compile Include="WipeOptions\RemoveAllDraftingPatterns.cs" />
+    <Compile Include="WipeOptions\RemoveAllElevationMarkers.cs" />
+    <Compile Include="WipeOptions\RemoveAllElevations.cs" />
+    <Compile Include="WipeOptions\RemoveAllEngplans.cs" />
+    <Compile Include="WipeOptions\RemoveAllExternalLinks.cs" />
+    <Compile Include="WipeOptions\RemoveAllFilters.cs" />
+    <Compile Include="WipeOptions\RemoveAllGroups.cs" />
+    <Compile Include="WipeOptions\RemoveAllImportedLine.cs" />
+    <Compile Include="WipeOptions\RemoveAllLegends.cs" />
+    <Compile Include="WipeOptions\RemoveAllMaterials.cs" />
+    <Compile Include="WipeOptions\RemoveAllModelPatterns.cs" />
+    <Compile Include="WipeOptions\RemoveAllPlans.cs" />
+    <Compile Include="WipeOptions\RemoveAllRcps.cs" />
+    <Compile Include="WipeOptions\RemoveAllReferencePlanes.cs" />
+    <Compile Include="WipeOptions\RemoveAllRenderMaterials.cs" />
+    <Compile Include="WipeOptions\RemoveAllRooms.cs" />
+    <Compile Include="WipeOptions\RemoveAllRoomSeparationLines.cs" />
+    <Compile Include="WipeOptions\RemoveAllSchedules.cs" />
+    <Compile Include="WipeOptions\RemoveAllScopeBoxes.cs" />
+    <Compile Include="WipeOptions\RemoveAllSections.cs" />
+    <Compile Include="WipeOptions\RemoveAllSheets.cs" />
+    <Compile Include="WipeOptions\RemoveAllThreed.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedAreaPlans.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedDetailSections.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedDrafting.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedElevations.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedEngplans.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedPlans.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedRcps.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedSections.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnreferencedThreed.cs" />
+    <Compile Include="WipeOptions\RemoveAllUnused.cs" />
+    <Compile Include="WipeOptions\RemoveAllViews.cs" />
+    <Compile Include="WipeOptions\RemoveAllViewTemplates.cs" />
+    <Compile Include="WipeOptions\WipeOption.cs" />
+    <Compile Include="ModPlusConnector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfoCommon.cs" />
+    <Compile Include="RevitCommand.cs" />
+    <Compile Include="WipeOptions\WipeOptionFactory.cs" />
+    <Compile Include="WipeOptions\WorksetRemover.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Page Include="ResultWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WipeOptionsSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mprCleaner_16x16.png" />
+    <Resource Include="Resources\mprCleaner_32x32.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if $(ConfigurationName) == Release (
+"$(ModPlusPostBuild)" "Revit" "$(TargetPath)"
+)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

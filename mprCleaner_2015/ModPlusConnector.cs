@@ -10,7 +10,19 @@
 
         public string Name => "mprCleaner";
 
+#if R2015
         public string AvailProductExternalVersion => "2015";
+#elif R2016
+        public string AvailProductExternalVersion => "2016";
+#elif R2017
+        public string AvailProductExternalVersion => "2017";
+#elif R2018
+        public string AvailProductExternalVersion => "2018";
+#elif R2019
+        public string AvailProductExternalVersion => "2019";
+#elif R2020
+        public string AvailProductExternalVersion => "2020";
+#endif
 
         public string FullClassName => "mprCleaner.RevitCommand";
 

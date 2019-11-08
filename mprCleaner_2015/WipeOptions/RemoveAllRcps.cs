@@ -6,7 +6,7 @@
 
     internal class RemoveAllRcps : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllRcps(UIDocument uiDoc, string wipeArgs = null)
         {

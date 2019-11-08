@@ -6,7 +6,7 @@
 
     internal class RemoveAllViews : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllViews(UIDocument uiDoc, string wipeArgs = null)
         {

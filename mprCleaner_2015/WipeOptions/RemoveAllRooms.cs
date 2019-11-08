@@ -6,7 +6,7 @@
 
     internal class RemoveAllRooms : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllRooms(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> rooms = new FilteredElementCollector(_doc)
+            var rooms = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_Rooms)
                 .WhereElementIsNotElementType()
                 .ToElements();

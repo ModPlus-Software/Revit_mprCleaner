@@ -6,7 +6,7 @@
 
     internal class RemoveAllFilters : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllFilters(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> filters = new FilteredElementCollector(_doc)
+            var filters = new FilteredElementCollector(_doc)
                 .OfClass(typeof(FilterElement))
                 .WhereElementIsNotElementType()
                 .ToElements();

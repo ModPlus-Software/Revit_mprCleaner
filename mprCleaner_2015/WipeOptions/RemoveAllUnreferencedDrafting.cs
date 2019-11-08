@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedDrafting : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedDrafting(UIDocument uiDoc, string wipeArgs = null)
         {

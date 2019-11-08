@@ -6,7 +6,7 @@
 
     internal class RemoveAllDrafting : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllDrafting(UIDocument uiDoc, string wipeArgs = null)
         {

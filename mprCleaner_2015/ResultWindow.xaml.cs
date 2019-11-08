@@ -1,6 +1,6 @@
 ﻿namespace mprCleaner
 {
-    public partial class ResultWindow 
+    public partial class ResultWindow
     {
         public ResultWindow(string message)
         {
@@ -11,7 +11,7 @@
 
         public static void Show(string message)
         {
-            ResultWindow window = new ResultWindow(message);
+            var window = new ResultWindow(message);
             window.ShowDialog();
         }
     }

@@ -15,14 +15,16 @@
             InitializeComponent();
             LbWipeOptions.ItemsSource = wipeOptions;
             Title = ModPlusAPI.Language.GetFunctionLocalName(RevitCommand.LangItem, new ModPlusConnector().LName);
-            ChkSkipFailures.IsChecked = 
+            ChkSkipFailures.IsChecked =
                 bool.TryParse(UserConfigFile.GetValue("mprCleaner", "SkipFailures"), out var b) && b; // false
         }
 
         private void BtAccept_OnClick(object sender, RoutedEventArgs e)
         {
             if (LbWipeOptions.Items.Cast<WipeOption>().Any(wo => wo.Visibility == Visibility.Visible && wo.State))
+            {
                 DialogResult = true;
+            }
             else
             {
                 // <h7>Вы ничего не выбрали</h7>
@@ -67,8 +69,8 @@
                 {
                     if (item is WipeOption wipeOption)
                     {
-                        wipeOption.Visibility = wipeOption.Name.ToUpper().Contains(tb.Text.ToUpper()) 
-                            ? Visibility.Visible 
+                        wipeOption.Visibility = wipeOption.Name.ToUpper().Contains(tb.Text.ToUpper())
+                            ? Visibility.Visible
                             : Visibility.Collapsed;
                     }
                 }

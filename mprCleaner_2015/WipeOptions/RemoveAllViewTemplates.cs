@@ -7,7 +7,7 @@
 
     internal class RemoveAllViewTemplates : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllViewTemplates(Document doc, string wipeArgs = null)
         {
@@ -19,7 +19,7 @@
 
         internal override int Execute(string args = null)
         {
-            List<ViewType> readonlyViews = new List<ViewType>()
+            var readonlyViews = new List<ViewType>()
             {
                 ViewType.ProjectBrowser,
                 ViewType.SystemBrowser,
@@ -39,11 +39,11 @@
             bool ConfirmRemoval(View view)
             {
                 if (view.GetType() == typeof(View)
-                    || view.GetType().IsSubclassOf(typeof(View))
+                    || (view.GetType().IsSubclassOf(typeof(View))
                     && view.IsTemplate
-                    && !readonlyViews.Contains(view.ViewType))
+                    && !readonlyViews.Contains(view.ViewType)))
                     return true;
-                
+
                 return false;
             }
         }

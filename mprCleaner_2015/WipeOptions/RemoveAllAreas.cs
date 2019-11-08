@@ -6,7 +6,7 @@
 
     internal class RemoveAllAreas : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllAreas(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> areas = new FilteredElementCollector(_doc)
+            var areas = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_Areas)
                 .WhereElementIsNotElementType()
                 .ToElements();

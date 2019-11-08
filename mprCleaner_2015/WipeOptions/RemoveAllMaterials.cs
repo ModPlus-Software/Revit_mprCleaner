@@ -7,9 +7,9 @@
 
     internal class RemoveAllMaterials : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
-        internal RemoveAllMaterials (Document doc, string wipeArgs = null)
+        internal RemoveAllMaterials(Document doc, string wipeArgs = null)
         {
             // Удалить все материалы
             Name = Language.GetItem(RevitCommand.LangItem, "w16");

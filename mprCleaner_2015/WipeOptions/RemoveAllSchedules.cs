@@ -8,7 +8,7 @@
 
     internal class RemoveAllSchedules : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllSchedules(UIDocument uiDoc, string wipeArgs = null)
         {
@@ -20,7 +20,7 @@
 
         internal override int Execute(string args = null)
         {
-            List<ViewType> readonlyViews = new List<ViewType>()
+            var readonlyViews = new List<ViewType>()
             {
                 ViewType.ProjectBrowser,
                 ViewType.SystemBrowser,
@@ -28,9 +28,9 @@
                 ViewType.DrawingSheet,
                 ViewType.Internal
             };
-            IList<UIView> openUiViews = _uiDoc.GetOpenUIViews();
-            List<ElementId> openViews = new List<ElementId>();
-            foreach (UIView ov in openUiViews)
+            var openUiViews = _uiDoc.GetOpenUIViews();
+            var openViews = new List<ElementId>();
+            foreach (var ov in openUiViews)
                 openViews.Add(ov.ViewId);
             IList<Element> schedules = new FilteredElementCollector(_uiDoc.Document)
                 .OfClass(typeof(ViewSchedule))
@@ -53,7 +53,7 @@
                         return false;
                     if (openViews.Contains(view.Id))
                         return false;
-                    if (((ViewSchedule) view).Definition.CategoryId.IntegerValue == (int)BuiltInCategory.OST_KeynoteTags)
+                    if (((ViewSchedule)view).Definition.CategoryId.IntegerValue == (int)BuiltInCategory.OST_KeynoteTags)
                         return false;
                     return true;
                 }

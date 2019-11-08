@@ -6,7 +6,7 @@
 
     internal class RemoveAllEngplans : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllEngplans(UIDocument uiDoc, string wipeArgs = null)
         {

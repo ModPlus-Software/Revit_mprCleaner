@@ -7,7 +7,7 @@
 
     internal class WorksetRemover : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal WorksetRemover(Document doc, string wipeArgs)
         {
@@ -18,11 +18,11 @@
 
         internal override int Execute(string args)
         {
-            Dictionary<string, WorksetId> worksetList = new FilteredWorksetCollector(_doc)
+            var worksetList = new FilteredWorksetCollector(_doc)
                 .OfKind(WorksetKind.UserWorkset)
                 .ToDictionary(wSet => wSet.Name, wSet => wSet.Id);
             ElementFilter elementWorksetFilter = new ElementWorksetFilter(worksetList[args]);
-            IList<Element> elementsOnWorkset = new FilteredElementCollector(_doc).WherePasses(elementWorksetFilter).ToElements();
+            var elementsOnWorkset = new FilteredElementCollector(_doc).WherePasses(elementWorksetFilter).ToElements();
             return HelperMethods.RemoveElements(Name, _doc, elementsOnWorkset);
         }
     }

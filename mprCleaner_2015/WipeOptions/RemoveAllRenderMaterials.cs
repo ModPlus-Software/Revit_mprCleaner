@@ -7,7 +7,7 @@
 
     internal class RemoveAllRenderMaterials : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllRenderMaterials(Document doc, string wipeArgs = null)
         {

@@ -7,7 +7,7 @@
 
     internal class RemoveAllGroups : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllGroups(Document doc, string wipeArgs = null)
         {
@@ -23,26 +23,30 @@
                 .OfClass(typeof(GroupType))
                 .Where(gType => ConfirmRemoval(gType) == true)
                 .ToList();
-            IList<Element> groups = new FilteredElementCollector(_doc)
+            var groups = new FilteredElementCollector(_doc)
                 .OfClass(typeof(Group))
                 .ToElements();
-            //ungroup all groups
+
+            // ungroup all groups
             if (groups.Count > 0)
+            {
                 using (var tr = new Transaction(_doc, "Разгруппировать все группы"))
                 {
-                    if (TransactionStatus.Started == tr.Start())
+                    if (tr.Start() == TransactionStatus.Started)
                     {
                         foreach (var element in groups)
                         {
-                            var grp = (Group) element;
+                            var grp = (Group)element;
                             grp.UngroupMembers();
                         }
 
-                        if (TransactionStatus.Committed != tr.Commit())
+                        if (tr.Commit() != TransactionStatus.Committed)
                             tr.RollBack();
                     }
                 }
-            //delete group types
+            }
+
+            // delete group types
             if (groupTypes.Count > 0)
                 return HelperMethods.RemoveElements(Name, _doc, groupTypes);
             return 0;
@@ -52,6 +56,5 @@
         {
             return groupType != null & groupType?.Category.Id.IntegerValue == (int)BuiltInCategory.OST_IOSModelGroups;
         }
-
     }
 }

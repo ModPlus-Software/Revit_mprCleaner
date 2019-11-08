@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedEngplans : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedEngplans(UIDocument uiDoc, string wipeArgs = null)
         {

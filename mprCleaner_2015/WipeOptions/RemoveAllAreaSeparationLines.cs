@@ -6,7 +6,7 @@
 
     internal class RemoveAllAreaSeparationLines : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllAreaSeparationLines(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> aLines = new FilteredElementCollector(_doc)
+            var aLines = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_AreaSchemeLines)
                 .WhereElementIsNotElementType()
                 .ToElements();

@@ -8,7 +8,7 @@
 
     internal class RemoveAllConstraints : WipeOption
     {
-        readonly Document _uiDoc;
+        private readonly Document _uiDoc;
 
         internal RemoveAllConstraints(UIApplication uiApp, string wipeArgs = null)
         {
@@ -20,7 +20,7 @@
 
         internal override int Execute(string args = null)
         {
-            FilteredElementCollector cl = new FilteredElementCollector(_uiDoc);
+            var cl = new FilteredElementCollector(_uiDoc);
             IList<Element> constraints = cl.OfCategory(BuiltInCategory.OST_Constraints)
                 .WhereElementIsNotElementType()
                 .Where(ConfirmRemoval)
@@ -34,6 +34,5 @@
         {
             return (constraint as Dimension)?.View is null;
         }
-
     }
 }

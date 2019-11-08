@@ -7,7 +7,7 @@
 
     internal class RemoveAllImportedLine : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllImportedLine(Document doc, string wipeArgs = null)
         {
@@ -27,7 +27,6 @@
                 return HelperMethods.RemoveElements(Name, _doc, lines);
             else
                 return 0;
-            
         }
 
         private bool ConfirmRemoval(Element line)

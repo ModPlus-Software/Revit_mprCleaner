@@ -6,7 +6,7 @@
 
     internal class RemoveAllScopeBoxes : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllScopeBoxes(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> scBoxes = new FilteredElementCollector(_doc)
+            var scBoxes = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_VolumeOfInterest)
                 .WhereElementIsNotElementType()
                 .ToElements();

@@ -20,7 +20,8 @@
             get => _visibility;
             set
             {
-                if (Equals(value, _visibility)) return;
+                if (Equals(value, _visibility)) 
+                    return;
                 _visibility = value;
                 OnPropertyChanged();
             }

@@ -6,7 +6,7 @@
 
     internal class RemoveAllThreed : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllThreed(UIDocument uiDoc, string wipeArgs = null)
         {

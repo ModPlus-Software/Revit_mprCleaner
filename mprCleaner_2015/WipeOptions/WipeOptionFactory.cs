@@ -18,40 +18,58 @@
                         {
                             // все неиспользуемые
                             new RemoveAllUnused(doc),
+
                             // все группы
                             new RemoveAllGroups(doc),
+
                             // все зависимости
                             new RemoveAllConstraints(uiApp),
+
                             // марки фасадов
                             new RemoveAllElevationMarkers (doc),
+
                             // связанные файлы
                             new RemoveAllExternalLinks(doc),
+
                             // штриховки 
                             new RemoveAllModelPatterns (doc),
+
                             // штриховки
                             new RemoveAllDraftingPatterns (doc),
+
                             // все фильтры
                             new RemoveAllFilters (doc),
+
                             // все импортированные типы линий
                             new RemoveAllImportedLine (doc),
+
                             // материалы
                             new RemoveAllMaterials (doc),
+
                             // материалы (для визуализации)
                             new RemoveAllRenderMaterials (doc),
+
                             // опорные плоскости
                             new RemoveAllReferencePlanes (doc),
+
                             // разделители помещений
                             new RemoveAllRoomSeparationLines (doc),
+
                             // границы зон
                             new RemoveAllAreaSeparationLines (doc),
+
                             // области видимости
                             new RemoveAllScopeBoxes (doc),
+
                             // все помещения
                             new RemoveAllRooms (doc),
+
                             // все листы (кроме открытых)
                             new RemoveAllSheets (uiDoc),
+
                             // все шаблоны видов
                             new RemoveAllViewTemplates (doc),
+
                             // все виды (любого типа, кроме открытых видов и листов)
                             new RemoveAllViews (uiDoc),
                             new RemoveAllThreed (uiDoc),

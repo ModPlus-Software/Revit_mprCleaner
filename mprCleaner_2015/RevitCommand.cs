@@ -10,12 +10,19 @@
     using WipeOptions;
     using Visibility = System.Windows.Visibility;
 
+    /// <summary>
+    /// Main command
+    /// </summary>
     [Regeneration(RegenerationOption.Manual)]
     [Transaction(TransactionMode.Manual)]
     public class RevitCommand : IExternalCommand
     {
+        /// <summary>
+        /// Localization lang item
+        /// </summary>
         public static string LangItem = "mprCleaner";
 
+        /// <inheritdoc />
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             ModPlusAPI.Statistic.SendCommandStarting(new ModPlusConnector());
@@ -23,17 +30,17 @@
             try
             {
                 var wipeOptions = new WipeOptionFactory().GetWipeOptions(commandData.Application);
-                WipeOptionsSelector selector = new WipeOptionsSelector(wipeOptions);
+                var selector = new WipeOptionsSelector(wipeOptions);
                 if (selector.ShowDialog() == true)
                 {
-                    var skipFailures = selector.ChkSkipFailures.IsChecked != null && 
+                    var skipFailures = selector.ChkSkipFailures.IsChecked != null &&
                                        selector.ChkSkipFailures.IsChecked.Value;
                     var report = string.Empty;
                     wipeOptions.Reverse();
                     var doc = commandData.Application.ActiveUIDocument.Document;
                     if (skipFailures)
                         commandData.Application.Application.FailuresProcessing += ApplicationOnFailuresProcessing;
-                    using (TransactionGroup transactionGroup = new TransactionGroup(doc))
+                    using (var transactionGroup = new TransactionGroup(doc))
                     {
                         transactionGroup.Start(ModPlusAPI.Language.GetFunctionLocalName(LangItem, new ModPlusConnector().LName));
 
@@ -47,6 +54,7 @@
 
                         transactionGroup.Assimilate();
                     }
+
                     if (skipFailures)
                         commandData.Application.Application.FailuresProcessing -= ApplicationOnFailuresProcessing;
 

@@ -6,7 +6,7 @@
 
     internal class RemoveAllReferencePlanes : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllReferencePlanes(Document doc, string wipeArgs = null)
         {
@@ -18,7 +18,7 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> refPlanes = new FilteredElementCollector(_doc)
+            var refPlanes = new FilteredElementCollector(_doc)
                 .OfCategory(BuiltInCategory.OST_CLines)
                 .WhereElementIsNotElementType()
                 .ToElements();

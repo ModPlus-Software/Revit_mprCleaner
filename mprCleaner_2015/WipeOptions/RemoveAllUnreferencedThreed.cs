@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedThreed : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedThreed(UIDocument uiDoc, string wipeArgs = null)
         {

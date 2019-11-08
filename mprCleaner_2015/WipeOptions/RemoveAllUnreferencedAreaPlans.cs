@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedAreaPlans : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedAreaPlans(UIDocument uiDoc, string wipeArgs = null)
         {

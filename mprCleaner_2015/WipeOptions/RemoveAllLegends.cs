@@ -8,7 +8,7 @@
 
     internal class RemoveAllLegends : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllLegends(UIDocument uiDoc, string wipeArgs = null)
         {
@@ -20,7 +20,7 @@
 
         internal override int Execute(string args = null)
         {
-            List<ViewType> readonlyViews = new List<ViewType>()
+            var readonlyViews = new List<ViewType>()
             {
                 ViewType.ProjectBrowser,
                 ViewType.SystemBrowser,
@@ -28,19 +28,19 @@
                 ViewType.DrawingSheet,
                 ViewType.Internal
             };
-            IList<UIView> openUiViews = _uiDoc.GetOpenUIViews();
-            List<ElementId> openViews = new List<ElementId>();
-            foreach (UIView ov in openUiViews)
+            var openUiViews = _uiDoc.GetOpenUIViews();
+            var openViews = new List<ElementId>();
+            foreach (var ov in openUiViews)
                 openViews.Add(ov.ViewId);
             IList<Element> legends = new FilteredElementCollector(_uiDoc.Document)
                 .OfClass(typeof(View))
                 .WhereElementIsNotElementType()
                 .Where(legend => ConfirmRemoval(legend as View))
-                .ToList(); 
+                .ToList();
             if (legends.Count > 0)
                 return HelperMethods.RemoveElements(Name, _uiDoc.Document, legends);
             return 0;
-            
+
             bool ConfirmRemoval(View view)
             {
                 if (view.GetType().Equals(typeof(View)) && view.ViewType == ViewType.Legend)
@@ -57,12 +57,14 @@
                         return true;
                 }
                 else if (view.GetType().Equals(typeof(ViewSchedule)) && (view as ViewSchedule).Definition.CategoryId.IntegerValue == (int)BuiltInCategory.OST_KeynoteTags)
+                {
                     return true;
+                }
                 else
+                {
                     return false;
+                }
             }
-
         }
-
     }
 }

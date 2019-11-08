@@ -23,57 +23,61 @@
                     }
                     catch
                     {
-                        //
+                        // ignore
                     }
                 }
+
                 return false;
             }
 
             using (var tr = new Transaction(uiDoc, actionTitle))
             {
-                if (TransactionStatus.Started == tr.Start())
+                if (tr.Start() == TransactionStatus.Started)
                 {
-                    foreach (Element elementToRemove in elementsToRemove)
+                    foreach (var elementToRemove in elementsToRemove)
                     {
                         if (RemoveElement(elementToRemove))
                             count++;
                     }
-                    if (TransactionStatus.Committed == tr.Commit())
+
+                    if (tr.Commit() == TransactionStatus.Committed)
                         return count;
                     else
                         tr.RollBack();
                 }
             }
+
             return 0;
         }
 
         internal static List<WipeOption> GetWorksetCleaners(Document doc)
         {
-            List<WipeOption> worksetFuncs = new List<WipeOption>();
+            var worksetFuncs = new List<WipeOption>();
 
-            //if model is workshared, get a list of current worksets
+            // if model is workshared, get a list of current worksets
             if (doc.IsWorkshared)
             {
-                FilteredWorksetCollector cl = new FilteredWorksetCollector(doc);
-                FilteredWorksetCollector worksetList = cl.OfKind(WorksetKind.UserWorkset);
+                var cl = new FilteredWorksetCollector(doc);
+                var worksetList = cl.OfKind(WorksetKind.UserWorkset);
 
-                //duplicate the workset element remover function for each workset
+                // duplicate the workset element remover function for each workset
                 foreach (var workset in worksetList)
                 {
                     WipeOption wipeOption = new WorksetRemover(doc, workset.Name);
                     worksetFuncs.Add(wipeOption);
                 }
             }
+
             return worksetFuncs;
         }
 
         internal static int PurgeAllViews(UIDocument uiDoc, Type viewClassToPurge, int viewTypeToPurge, string actionTitle, bool keepReferenced = false)
         {
-            IList<UIView> openUIViews = uiDoc.GetOpenUIViews();
-            List<ElementId> openViews = new List<ElementId>();
-            foreach (UIView ov in openUIViews)
+            var openUiViews = uiDoc.GetOpenUIViews();
+            var openViews = new List<ElementId>();
+            foreach (var ov in openUiViews)
                 openViews.Add(ov.ViewId);
-            List<ViewType> readonlyViews = new List<ViewType>()
+            var readonlyViews = new List<ViewType>()
             {
                   ViewType.ProjectBrowser,
                   ViewType.SystemBrowser,
@@ -83,22 +87,23 @@
             };
             bool IsReferenced(View view)
             {
-                IList<Element> viewRefs = new FilteredElementCollector(uiDoc.Document)
+                var viewRefs = new FilteredElementCollector(uiDoc.Document)
                            .OfCategory(BuiltInCategory.OST_ReferenceViewer)
                            .WhereElementIsNotElementType()
                            .ToElements();
-                List<ElementId> viewRefsIds = new List<ElementId>();
-                foreach (Element viewRef in viewRefs)
+                var viewRefsIds = new List<ElementId>();
+                foreach (var viewRef in viewRefs)
                 {
-                    Parameter refParam = viewRef.get_Parameter(BuiltInParameter.REFERENCE_VIEWER_TARGET_VIEW);
+                    var refParam = viewRef.get_Parameter(BuiltInParameter.REFERENCE_VIEWER_TARGET_VIEW);
                     viewRefsIds.Add(refParam.AsElementId());
                 }
-                Parameter refSheet = view.get_Parameter(BuiltInParameter.VIEW_REFERENCING_SHEET);
-                Parameter refViewport = view.get_Parameter(BuiltInParameter.VIEW_REFERENCING_DETAIL);
-                if (!(refSheet is null)
+
+                var refSheet = view.get_Parameter(BuiltInParameter.VIEW_REFERENCING_SHEET);
+                var refViewport = view.get_Parameter(BuiltInParameter.VIEW_REFERENCING_DETAIL);
+                if ((!(refSheet is null)
                         && !(refViewport is null)
-                        && refSheet.AsString() != ""
-                        && refViewport.AsString() != ""
+                        && refSheet.AsString() != string.Empty
+                        && refViewport.AsString() != string.Empty)
                         || viewRefsIds.Contains(view.Id))
                     return true;
                 return false;
@@ -106,7 +111,7 @@
 
             bool ConfirmRemoval(View view)
             {
-                if (view.GetType().IsSubclassOf(viewClassToPurge) || 
+                if (view.GetType().IsSubclassOf(viewClassToPurge) ||
                     view.GetType() == viewClassToPurge)
                 {
                     if (viewTypeToPurge != 0 && (int)view.ViewType != viewTypeToPurge)
@@ -115,7 +120,7 @@
                         return false;
                     if (view.IsTemplate)
                         return false;
-                    if (ViewType.ThreeD == view.ViewType && "{3D}" == view.Name)
+                    if (view.ViewType == ViewType.ThreeD && view.Name == "{3D}")
                         return false;
                     if (view.Name.Contains("<"))
                         return false;
@@ -136,7 +141,6 @@
                .ToList();
 
             return RemoveElements(actionTitle, uiDoc.Document, views);
-
         }
     }
 }

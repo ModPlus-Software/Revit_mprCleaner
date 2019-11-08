@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedSections : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedSections(UIDocument uiDoc, string wipeArgs = null)
         {

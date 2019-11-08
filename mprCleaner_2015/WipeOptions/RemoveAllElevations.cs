@@ -6,7 +6,7 @@
 
     internal class RemoveAllElevations : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllElevations(UIDocument uiDoc, string wipeArgs = null)
         {

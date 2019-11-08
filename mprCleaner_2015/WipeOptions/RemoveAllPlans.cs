@@ -6,7 +6,7 @@
 
     internal class RemoveAllPlans : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllPlans(UIDocument uiDoc, string wipeArgs = null)
         {

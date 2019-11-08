@@ -6,7 +6,7 @@
 
     internal class RemoveAllModelPatterns : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllModelPatterns(Document doc, string wipeArgs = null)
         {
@@ -18,16 +18,17 @@
 
         internal override int Execute(string args = null)
         {
-            IList<Element> patternElements = new FilteredElementCollector(_doc)
+            var patternElements = new FilteredElementCollector(_doc)
                 .OfClass(typeof(FillPatternElement))
                 .WhereElementIsNotElementType()
                 .ToElements();
-            List<Element> modelPatterns = new List<Element>();
-            foreach (Element patternElement in patternElements)
+            var modelPatterns = new List<Element>();
+            foreach (var patternElement in patternElements)
             {
-                if (((FillPatternElement) patternElement).GetFillPattern().Target == FillPatternTarget.Model)
+                if (((FillPatternElement)patternElement).GetFillPattern().Target == FillPatternTarget.Model)
                     modelPatterns.Add(patternElement);
             }
+
             if (modelPatterns.Count > 0)
                 return HelperMethods.RemoveElements(Name, _doc, modelPatterns);
             return 0;

@@ -6,7 +6,7 @@
 
     internal class RemoveAllSections : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllSections(UIDocument uiDoc, string wipeArgs = null)
         {

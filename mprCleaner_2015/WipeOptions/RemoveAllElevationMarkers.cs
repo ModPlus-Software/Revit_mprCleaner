@@ -7,7 +7,7 @@
 
     internal class RemoveAllElevationMarkers : WipeOption
     {
-        readonly Document _doc;
+        private readonly Document _doc;
 
         internal RemoveAllElevationMarkers(Document doc, string wipeArgs = null)
         {

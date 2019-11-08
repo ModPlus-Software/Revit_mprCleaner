@@ -6,7 +6,7 @@
 
     internal class RemoveAllUnreferencedElevations : WipeOption
     {
-        readonly UIDocument _uiDoc;
+        private readonly UIDocument _uiDoc;
 
         internal RemoveAllUnreferencedElevations(UIDocument uiDoc, string wipeArgs = null)
         {

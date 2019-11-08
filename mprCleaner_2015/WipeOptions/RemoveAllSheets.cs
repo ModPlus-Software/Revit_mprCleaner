@@ -8,8 +8,8 @@
 
     internal class RemoveAllSheets : WipeOption
     {
-        readonly UIDocument _uiDoc;
-        readonly IList<ElementId> openViews = new List<ElementId>();
+        private readonly UIDocument _uiDoc;
+        private readonly IList<ElementId> openViews = new List<ElementId>();
 
         internal RemoveAllSheets(UIDocument uiDoc, string wipeArgs = null)
         {
@@ -21,8 +21,8 @@
 
         internal override int Execute(string args = null)
         {
-            IList<UIView> openUIViews = _uiDoc.GetOpenUIViews();
-            foreach (UIView ov in openUIViews)
+            var openUIViews = _uiDoc.GetOpenUIViews();
+            foreach (var ov in openUIViews)
                 openViews.Add(ov.ViewId);
             IList<Element> sheets = new FilteredElementCollector(_uiDoc.Document).OfCategory(BuiltInCategory.OST_Sheets)
                 .WhereElementIsNotElementType()
@@ -38,6 +38,5 @@
         {
             return sheet is ViewSheet && !openViews.Contains(sheet.Id);
         }
-
     }
 }

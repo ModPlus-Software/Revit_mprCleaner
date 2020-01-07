@@ -4,3 +4,6 @@ Remove objects of certain categories from the model with the ability to remove u
 Revit >= 2015
 ### Plugin card ###
 https://modplus.org/revitplugins/mprcleaner
+### This project uses
+
+[<img align="left" src="https://raw.githubusercontent.com/ModPlus-Software/Documentation/master/Images/nuke-logo-small.png" />](https://nuke.build/)

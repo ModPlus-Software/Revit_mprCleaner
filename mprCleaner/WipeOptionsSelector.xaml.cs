@@ -10,7 +10,11 @@
 
     public partial class WipeOptionsSelector
     {
-        public WipeOptionsSelector(List<WipeOption> wipeOptions)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WipeOptionsSelector"/> class.
+        /// </summary>
+        /// <param name="wipeOptions">Collection of <see cref="WipeOption"/></param>
+        public WipeOptionsSelector(IEnumerable<WipeOption> wipeOptions)
         {
             InitializeComponent();
             LbWipeOptions.ItemsSource = wipeOptions;

@@ -7,12 +7,16 @@
     public abstract class WipeOption : VmBase
     {
         private bool _state;
+        private Visibility _visibility;
+        
+        internal WipeOption()
+        {
+            State = false;
+        }
 
         public string Name { get; set; }
 
         public string WipeArgs { get; set; }
-
-        private Visibility _visibility;
 
         /// <summary></summary>
         public Visibility Visibility
@@ -37,9 +41,22 @@
             }
         }
 
-        internal WipeOption()
+        /// <summary>
+        /// Load <see cref="State"/> status form user config file
+        /// </summary>
+        public virtual void LoadStateStatusFromSettings()
         {
-            State = false;
+            if (bool.TryParse(UserConfigFile.GetValue("mprCleaner", GetType().Name), out var b))
+                State = b;
+        }
+        
+        /// <summary>
+        /// Save <see cref="State"/> status to user config file
+        /// </summary>
+        /// <param name="saveFile">Save user config file immediately</param>
+        public virtual void SaveSateStatusToSettings(bool saveFile)
+        {
+            UserConfigFile.SetValue("mprCleaner", GetType().Name, State.ToString(), saveFile);
         }
 
         public virtual string Report()

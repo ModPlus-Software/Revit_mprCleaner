@@ -6,6 +6,7 @@
     using Autodesk.Revit.DB;
     using Autodesk.Revit.DB.Events;
     using Autodesk.Revit.UI;
+    using ModPlusAPI;
     using ModPlusAPI.Windows;
     using WipeOptions;
     using Visibility = System.Windows.Visibility;
@@ -25,14 +26,19 @@
         /// <inheritdoc />
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            ModPlusAPI.Statistic.SendCommandStarting(new ModPlusConnector());
+            Statistic.SendCommandStarting(new ModPlusConnector());
 
             try
             {
                 var wipeOptions = new WipeOptionFactory().GetWipeOptions(commandData.Application);
+                wipeOptions.ForEach(w => w.LoadStateStatusFromSettings());
+                
                 var selector = new WipeOptionsSelector(wipeOptions);
                 if (selector.ShowDialog() == true)
                 {
+                    wipeOptions.ForEach(w => w.SaveSateStatusToSettings(false));
+                    UserConfigFile.SaveConfigFile();
+
                     var skipFailures = selector.ChkSkipFailures.IsChecked != null &&
                                        selector.ChkSkipFailures.IsChecked.Value;
                     var report = string.Empty;
@@ -42,7 +48,7 @@
                         commandData.Application.Application.FailuresProcessing += ApplicationOnFailuresProcessing;
                     using (var transactionGroup = new TransactionGroup(doc))
                     {
-                        transactionGroup.Start(ModPlusAPI.Language.GetFunctionLocalName(LangItem, new ModPlusConnector().LName));
+                        transactionGroup.Start(Language.GetFunctionLocalName(LangItem, new ModPlusConnector().LName));
 
                         foreach (var wipeOption in wipeOptions)
                         {

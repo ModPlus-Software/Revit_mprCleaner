@@ -17,6 +17,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args)
         {
             IList<Element> groupTypes = new FilteredElementCollector(_doc)

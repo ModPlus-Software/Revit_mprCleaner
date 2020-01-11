@@ -16,6 +16,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var patternElements = new FilteredElementCollector(_doc)

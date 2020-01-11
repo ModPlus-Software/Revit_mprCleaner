@@ -1,9 +1,10 @@
 ﻿namespace mprCleaner.WipeOptions
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Autodesk.Revit.DB;
-    using Autodesk.Revit.UI;
     using ModPlusAPI;
+    using ModPlusAPI.Windows;
 
     internal class RemoveAllExternalLinks : WipeOption
     {
@@ -17,6 +18,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var filepath = _doc.PathName;
@@ -24,6 +26,7 @@
             {
                 IList<Element> xRefLinks = new List<Element>();
                 var modelPath = ModelPathUtils.ConvertUserVisiblePathToModelPath(filepath);
+                var wasException = false;
                 try
                 {
                     var transData = TransmissionData.ReadTransmissionData(modelPath);
@@ -35,17 +38,29 @@
                             xRefLinks.Add(externalReference);
                     }
 
-                    return HelperMethods.RemoveElements(Name, _doc, xRefLinks);
+                    HelperMethods.RemoveElements(Name, _doc, xRefLinks);
                 }
                 catch
                 {
-                    return 0;
+                    wasException = true;
                 }
+
+                try
+                {
+                    var linkTypesIds = new FilteredElementCollector(_doc).OfClass(typeof(RevitLinkType)).Select(l => l.Id).ToList();
+                    
+                    HelperMethods.RemoveElements(Name, _doc, linkTypesIds);
+                }
+                catch
+                {
+                    wasException = true;
+                }
+
+                return wasException ? 0 : 1;
             }
-            else
-            {
-                TaskDialog.Show(Name, "Модель должна быть сохранена для удаления внешних ссылок.");
-            }
+
+            // Модель должна быть сохранена для удаления внешних ссылок
+            MessageBox.Show(Language.GetItem(RevitCommand.LangItem, "m1"), MessageBoxIcon.Alert);
 
             return 0;
         }

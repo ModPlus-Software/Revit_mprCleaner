@@ -18,6 +18,7 @@
             _uiDoc = uiDoc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var readonlyViews = new List<ViewType>()

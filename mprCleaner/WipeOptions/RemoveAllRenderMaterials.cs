@@ -17,6 +17,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             IList<Element> mats = new FilteredElementCollector(_doc)

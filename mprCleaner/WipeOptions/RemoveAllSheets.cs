@@ -19,6 +19,7 @@
             _uiDoc = uiDoc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var openUIViews = _uiDoc.GetOpenUIViews();

@@ -17,6 +17,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var getUnusedAppearances = _doc.GetType().GetMethod("GetUnusedAppearances", BindingFlags.NonPublic | BindingFlags.Instance);

@@ -1,6 +1,5 @@
 ﻿namespace mprCleaner.WipeOptions
 {
-    using System.Collections.Generic;
     using Autodesk.Revit.DB;
     using ModPlusAPI;
 
@@ -16,6 +15,7 @@
             _doc = doc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var aLines = new FilteredElementCollector(_doc)

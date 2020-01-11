@@ -18,6 +18,7 @@
             _uiDoc = uiApp?.ActiveUIDocument.Document;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             var cl = new FilteredElementCollector(_uiDoc);

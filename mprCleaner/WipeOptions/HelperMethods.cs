@@ -10,44 +10,54 @@
     {
         internal static int RemoveElements(string actionTitle, Document uiDoc, IList<Element> elementsToRemove)
         {
+            return RemoveElements(actionTitle, uiDoc, elementsToRemove.Select(e => e.Id).ToList());
+        }
+
+        internal static int RemoveElements(string actionTitle, Document uiDoc, IList<ElementId> elementIdsToRemove)
+        {
             var count = 0;
-
-            bool RemoveElement(Element remEl)
-            {
-                if (!(remEl is null))
-                {
-                    try
-                    {
-                        uiDoc.Delete(remEl.Id);
-                        return true;
-                    }
-                    catch
-                    {
-                        // ignore
-                    }
-                }
-
-                return false;
-            }
 
             using (var tr = new Transaction(uiDoc, actionTitle))
             {
                 if (tr.Start() == TransactionStatus.Started)
                 {
-                    foreach (var elementToRemove in elementsToRemove)
+                    foreach (var elementToRemove in elementIdsToRemove)
                     {
-                        if (RemoveElement(elementToRemove))
+                        if (RemoveElement(elementToRemove, uiDoc))
                             count++;
                     }
 
                     if (tr.Commit() == TransactionStatus.Committed)
                         return count;
-                    else
-                        tr.RollBack();
+                    
+                    tr.RollBack();
                 }
             }
 
             return 0;
+        }
+
+        private static bool RemoveElement(Element element, Document uiDoc)
+        {
+            return RemoveElement(element.Id, uiDoc);
+        }
+
+        private static bool RemoveElement(ElementId elementId, Document uiDoc)
+        {
+            if (!(elementId is null))
+            {
+                try
+                {
+                    uiDoc.Delete(elementId);
+                    return true;
+                }
+                catch
+                {
+                    // ignore
+                }
+            }
+
+            return false;
         }
 
         internal static List<WipeOption> GetWorksetCleaners(Document doc)

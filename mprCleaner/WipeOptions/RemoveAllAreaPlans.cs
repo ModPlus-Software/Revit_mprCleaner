@@ -16,6 +16,7 @@
             _uiDoc = uiDoc;
         }
 
+        /// <inheritdoc/>
         internal override int Execute(string args = null)
         {
             return HelperMethods.PurgeAllViews(_uiDoc, typeof(ViewPlan), (int)ViewType.AreaPlan, Name);

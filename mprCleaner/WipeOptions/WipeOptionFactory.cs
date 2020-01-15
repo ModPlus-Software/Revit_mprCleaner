@@ -30,6 +30,10 @@
 
                             // связанные файлы
                             new RemoveAllExternalLinks(doc),
+#if !R2015 && !R2016 && !R2017
+                            // координационные модели
+                            new RemoveCoordinationModels(doc),
+#endif
 
                             // штриховки 
                             new RemoveAllModelPatterns(doc),

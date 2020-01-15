@@ -1,6 +1,7 @@
 ﻿namespace mprCleaner
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Autodesk.Revit.Attributes;
     using Autodesk.Revit.DB;
@@ -32,7 +33,7 @@
             {
                 var wipeOptions = new WipeOptionFactory().GetWipeOptions(commandData.Application);
                 wipeOptions.ForEach(w => w.LoadStateStatusFromSettings());
-                
+
                 var selector = new WipeOptionsSelector(wipeOptions);
                 if (selector.ShowDialog() == true)
                 {

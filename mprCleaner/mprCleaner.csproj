@@ -124,6 +124,7 @@
     <Compile Include="WipeOptions\RemoveAllUnused.cs" />
     <Compile Include="WipeOptions\RemoveAllViews.cs" />
     <Compile Include="WipeOptions\RemoveAllViewTemplates.cs" />
+    <Compile Include="WipeOptions\RemoveCoordinationModels.cs" />
     <Compile Include="WipeOptions\WipeOption.cs" />
     <Compile Include="ModPlusConnector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

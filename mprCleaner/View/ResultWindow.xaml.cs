@@ -1,5 +1,8 @@
-﻿namespace mprCleaner
+﻿namespace mprCleaner.View
 {
+    /// <summary>
+    /// Логика взаимодействия для ResultWindow.xaml
+    /// </summary>
     public partial class ResultWindow
     {
         public ResultWindow(string message)

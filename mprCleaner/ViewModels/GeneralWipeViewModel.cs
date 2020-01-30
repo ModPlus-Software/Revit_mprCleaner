@@ -108,43 +108,44 @@
             {
                 // <h7>Вы ничего не выбрали</h7>
                 RevitCommand.MainWindowInstance.ShowMessageAsync(Language.GetItem(RevitCommand.LangItem, "h7"), string.Empty);
+                return;
             }
-            else
+
+            RevitCommand.MainWindowInstance.Close();
+
+            foreach (var wipeOption in WipeOptions)
             {
-                RevitCommand.MainWindowInstance.Close();
-
-                foreach (var wipeOption in WipeOptions)
-                {
-                    wipeOption.SaveSateStatusToSettings(false);
-                }
-
-                UserConfigFile.SaveConfigFile();
-
-                var report = string.Empty;
-                wipeOptions.Reverse();
-                var doc = _uiApplication.ActiveUIDocument.Document;
-                if (SkipFailures)
-                    _uiApplication.Application.FailuresProcessing += ApplicationOnFailuresProcessing;
-                using (var transactionGroup = new TransactionGroup(doc))
-                {
-                    transactionGroup.Start(Language.GetFunctionLocalName(RevitCommand.LangItem, new ModPlusConnector().LName));
-
-                    foreach (var wipeOption in wipeOptions)
-                    {
-                        if (wipeOption.State && wipeOption.Visibility == Visibility.Visible)
-                        {
-                            report += "\n" + wipeOption.Report();
-                        }
-                    }
-
-                    transactionGroup.Assimilate();
-                }
-
-                if (SkipFailures)
-                    _uiApplication.Application.FailuresProcessing -= ApplicationOnFailuresProcessing;
-
-                ResultWindow.Show(report.TrimStart("\n".ToCharArray()));
+                wipeOption.SaveSateStatusToSettings(false);
             }
+
+            UserConfigFile.SaveConfigFile();
+
+            var report = string.Empty;
+            wipeOptions.Reverse();
+            var doc = _uiApplication.ActiveUIDocument.Document;
+            if (SkipFailures)
+                _uiApplication.Application.FailuresProcessing += ApplicationOnFailuresProcessing;
+            using (var transactionGroup = new TransactionGroup(doc))
+            {
+                transactionGroup.Start(Language.GetFunctionLocalName(
+                    RevitCommand.LangItem,
+                    new ModPlusConnector().LName));
+
+                foreach (var wipeOption in wipeOptions)
+                {
+                    if (wipeOption.State && wipeOption.Visibility == Visibility.Visible)
+                    {
+                        report += "\n" + wipeOption.Report();
+                    }
+                }
+
+                transactionGroup.Assimilate();
+            }
+
+            if (SkipFailures)
+                _uiApplication.Application.FailuresProcessing -= ApplicationOnFailuresProcessing;
+
+            ResultWindow.Show(report.TrimStart("\n".ToCharArray()));
         }
 
         private void ApplicationOnFailuresProcessing(object sender, FailuresProcessingEventArgs e)

@@ -19,9 +19,11 @@
         </ResourceDictionary>
     </Window.Resources>
     <TabControl>
-        <TabItem Header="General wipes">
-            <view:GeneralWipeControl DataContext="{Binding Path=GeneralWipeViewModel}"></view:GeneralWipeControl>
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h10}">
+            <view:GeneralWipeControl DataContext="{Binding Path=GeneralWipeViewModel}"/>
         </TabItem>
-        <TabItem Header="View templates"></TabItem>
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h11}">
+            <view:ViewTemplatesCleanerControl DataContext="{Binding Path=ViewTemplatesCleanerViewModel}"/>
+        </TabItem>
     </TabControl>
 </mps:ModPlusWindow>

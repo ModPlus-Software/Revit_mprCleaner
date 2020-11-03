@@ -1,252 +1,103 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8175F288-BB78-4C4E-A1F7-077C1A3D6BEB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+   <PropertyGroup>
+    <Version>2.0.1.0</Version>
     <RootNamespace>mprCleaner</RootNamespace>
-    <AssemblyName>mprCleaner</AssemblyName>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <!-- For All -->
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>none</DebugType>
+    <AssemblyName>$(RootNamespace)</AssemblyName>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <Company>modplus.org</Company>
+    <Authors>modplus.org</Authors>
+    <Product>ModPlus</Product>
+    <Copyright>Copyright © ModPlus</Copyright>
     <CodeAnalysisRuleSet>$(SolutionDir)\ModPlus.ruleset</CodeAnalysisRuleSet>
-    <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
+    <Platform>x64</Platform>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <Optimize>false</Optimize>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;R2021</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
-    <PlatformTarget>x64</PlatformTarget>
+    <UseWpf>true</UseWpf>
   </PropertyGroup>
-  <!-- For Revit versions -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2015|x64'">
-    <OutputPath>bin\x64\R2015\</OutputPath>
-    <DefineConstants>TRACE;R2015</DefineConstants>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2015</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R2017'">
+    <TargetFramework>net452</TargetFramework>
+    <Description>2017</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2016|x64'">
-    <OutputPath>bin\x64\R2016\</OutputPath>
-    <DefineConstants>TRACE;R2016</DefineConstants>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2016</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R2018'">
+    <TargetFramework>net452</TargetFramework>
+    <Description>2018</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2017|x64'">
-    <OutputPath>bin\x64\R2017\</OutputPath>
-    <DefineConstants>TRACE;R2017</DefineConstants>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2017</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R2019'">
+    <TargetFramework>net47</TargetFramework>
+    <Description>2019</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2018|x64'">
-    <OutputPath>bin\x64\R2018\</OutputPath>
-    <DefineConstants>TRACE;R2018</DefineConstants>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2018</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R2020'">
+    <TargetFramework>net47</TargetFramework>
+    <Description>2020</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2019|x64'">
-    <OutputPath>bin\x64\R2019\</OutputPath>
-    <DefineConstants>TRACE;R2019</DefineConstants>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2019</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'R2021' or '$(Configuration)' == 'Debug'">
+    <TargetFramework>net48</TargetFramework>
+    <Description>2021</Description>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2020|x64'">
-    <OutputPath>bin\x64\R2020\</OutputPath>
-    <DefineConstants>TRACE;R2020</DefineConstants>
-    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2020</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>Debug;R$(Description)</DefineConstants>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'R2021|x64'">
-    <OutputPath>bin\x64\R2021\</OutputPath>
-    <DefineConstants>TRACE;R2021</DefineConstants>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-    <AssemblyName>$(AssemblyName)_2021</AssemblyName>
+
+  <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
+    <Configurations>R$(Description)</Configurations>
+    <DefineConstants>R$(Description)</DefineConstants>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyName>$(AssemblyName)_$(Description)</AssemblyName>
+  </PropertyGroup>
+
+  <Choose>
+    <When Condition="'$(Configuration)'=='R2017'">
+      <ItemGroup>
+        <PackageReference Include="ModPlus.Revit.API.2017" Version="1.0.0" ExcludeAssets="runtime" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='R2018'">
+      <ItemGroup>
+        <PackageReference Include="ModPlus.Revit.API.2018" Version="1.0.0" ExcludeAssets="runtime" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='R2019'">
+      <ItemGroup>
+        <PackageReference Include="ModPlus.Revit.API.2019" Version="1.0.0" ExcludeAssets="runtime" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='R2020'">
+      <ItemGroup>
+        <PackageReference Include="ModPlus.Revit.API.2020" Version="1.0.0" ExcludeAssets="runtime" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)'=='R2021' or '$(Configuration)'=='Debug'">
+      <ItemGroup>
+        <PackageReference Include="ModPlus.Revit.API.2021" Version="1.0.0" ExcludeAssets="runtime" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
+    <PackageReference Include="JetBrains.Annotations" Version="2020.1.0" ExcludeAssets="runtime" />
+    <PackageReference Include="ModPlusAPI" Version="4.7.0" ExcludeAssets="runtime" />
+    <PackageReference Include="ModPlusStyle" Version="3.6.0" ExcludeAssets="runtime" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Models\ViewTemplate.cs" />
-    <Compile Include="ViewModels\GeneralWipeViewModel.cs" />
-    <Compile Include="ViewModels\MainViewModel.cs" />
-    <Compile Include="ViewModels\ViewTemplatesCleanerViewModel.cs" />
-    <Compile Include="View\GeneralWipeControl.xaml.cs">
-      <DependentUpon>GeneralWipeControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ResultWindow.xaml.cs">
-      <DependentUpon>ResultWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewTemplatesCleanerControl.xaml.cs">
-      <DependentUpon>ViewTemplatesCleanerControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="WipeOptions\HelperMethods.cs" />
-    <Compile Include="WipeOptions\RemoveAllAreaPlans.cs" />
-    <Compile Include="WipeOptions\RemoveAllAreas.cs" />
-    <Compile Include="WipeOptions\RemoveAllAreaSeparationLines.cs" />
-    <Compile Include="WipeOptions\RemoveAllConstraints.cs" />
-    <Compile Include="WipeOptions\RemoveAllDetailSection.cs" />
-    <Compile Include="WipeOptions\RemoveAllDrafting.cs" />
-    <Compile Include="WipeOptions\RemoveAllDraftingPatterns.cs" />
-    <Compile Include="WipeOptions\RemoveAllElevationMarkers.cs" />
-    <Compile Include="WipeOptions\RemoveAllElevations.cs" />
-    <Compile Include="WipeOptions\RemoveAllEngplans.cs" />
-    <Compile Include="WipeOptions\RemoveAllExternalLinks.cs" />
-    <Compile Include="WipeOptions\RemoveAllFilters.cs" />
-    <Compile Include="WipeOptions\RemoveAllGroups.cs" />
-    <Compile Include="WipeOptions\RemoveAllImportedLine.cs" />
-    <Compile Include="WipeOptions\RemoveAllLegends.cs" />
-    <Compile Include="WipeOptions\RemoveAllMaterials.cs" />
-    <Compile Include="WipeOptions\RemoveAllModelPatterns.cs" />
-    <Compile Include="WipeOptions\RemoveAllPlans.cs" />
-    <Compile Include="WipeOptions\RemoveAllRcps.cs" />
-    <Compile Include="WipeOptions\RemoveAllReferencePlanes.cs" />
-    <Compile Include="WipeOptions\RemoveAllRenderMaterials.cs" />
-    <Compile Include="WipeOptions\RemoveAllRooms.cs" />
-    <Compile Include="WipeOptions\RemoveAllRoomSeparationLines.cs" />
-    <Compile Include="WipeOptions\RemoveAllSchedules.cs" />
-    <Compile Include="WipeOptions\RemoveAllScopeBoxes.cs" />
-    <Compile Include="WipeOptions\RemoveAllSections.cs" />
-    <Compile Include="WipeOptions\RemoveAllSheets.cs" />
-    <Compile Include="WipeOptions\RemoveAllThreed.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedAreaPlans.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedDetailSections.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedDrafting.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedElevations.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedEngplans.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedPlans.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedRcps.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedSections.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnreferencedThreed.cs" />
-    <Compile Include="WipeOptions\RemoveAllUnused.cs" />
-    <Compile Include="WipeOptions\RemoveAllViews.cs" />
-    <Compile Include="WipeOptions\RemoveAllViewTemplates.cs" />
-    <Compile Include="WipeOptions\RemoveCoordinationModels.cs" />
-    <Compile Include="WipeOptions\WipeOption.cs" />
-    <Compile Include="ModPlusConnector.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RevitCommand.cs" />
-    <Compile Include="WipeOptions\WipeOptionFactory.cs" />
-    <Compile Include="WipeOptions\WorksetRemover.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="View\GeneralWipeControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\MainWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ResultWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ViewTemplatesCleanerControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
+
   <ItemGroup>
     <Resource Include="Resources\mprCleaner_16x16.png" />
     <Resource Include="Resources\mprCleaner_32x32.png" />
   </ItemGroup>
-  <!-- CHOOSE -->
-  <Choose>
-    <When Condition=" '$(Configuration)'=='R2015' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2015">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2016' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2016">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2017' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2017">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2018' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2018">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2019' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2019">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2020' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2020">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-    <When Condition=" '$(Configuration)'=='R2021' or '$(Configuration)'=='Debug' ">
-      <ItemGroup>
-        <PackageReference Include="ModPlus.Revit.API.2021">
-          <Version>1.0.0</Version>
-          <ExcludeAssets>runtime</ExcludeAssets>
-        </PackageReference>
-      </ItemGroup>
-    </When>
-  </Choose>
-  <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations">
-      <Version>2019.1.3</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="ModPlusAPI">
-      <Version>1.6.0</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="ModPlusStyle">
-      <Version>2.0.0</Version>
-      <ExcludeAssets>runtime</ExcludeAssets>
-    </PackageReference>
-    <PackageReference Include="StyleCop.Analyzers">
-      <Version>1.1.118</Version>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-  </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  
 </Project>

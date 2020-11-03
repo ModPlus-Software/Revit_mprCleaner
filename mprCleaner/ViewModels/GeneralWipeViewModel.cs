@@ -7,9 +7,10 @@
     using Autodesk.Revit.DB.Events;
     using Autodesk.Revit.UI;
     using ModPlusAPI;
+    using ModPlusAPI.Enums;
     using ModPlusAPI.Mvvm;
+    using ModPlusAPI.Services;
     using ModPlusStyle.Controls.Dialogs;
-    using View;
     using WipeOptions;
     using Visibility = System.Windows.Visibility;
 
@@ -120,7 +121,7 @@
 
             UserConfigFile.SaveConfigFile();
 
-            var report = string.Empty;
+            var resultService = new ResultService();
             wipeOptions.Reverse();
             var doc = _uiApplication.ActiveUIDocument.Document;
             if (SkipFailures)
@@ -135,7 +136,7 @@
                 {
                     if (wipeOption.State && wipeOption.Visibility == Visibility.Visible)
                     {
-                        report += "\n" + wipeOption.Report();
+                        resultService.Add(wipeOption.Report(), null, ResultItemType.Info);
                     }
                 }
 
@@ -145,7 +146,7 @@
             if (SkipFailures)
                 _uiApplication.Application.FailuresProcessing -= ApplicationOnFailuresProcessing;
 
-            ResultWindow.Show(report.TrimStart("\n".ToCharArray()));
+            resultService.ShowWithoutGrouping();
         }
 
         private void ApplicationOnFailuresProcessing(object sender, FailuresProcessingEventArgs e)

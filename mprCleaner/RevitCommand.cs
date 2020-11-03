@@ -4,7 +4,6 @@
     using Autodesk.Revit.Attributes;
     using Autodesk.Revit.DB;
     using Autodesk.Revit.UI;
-    using ModPlusAPI;
     using ModPlusAPI.Windows;
     using View;
     using ViewModels;
@@ -29,7 +28,9 @@
         /// <inheritdoc />
         public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
-            Statistic.SendCommandStarting(new ModPlusConnector());
+#if !DEBUG
+            ModPlusAPI.Statistic.SendCommandStarting(new ModPlusConnector());
+#endif
 
             try
             {

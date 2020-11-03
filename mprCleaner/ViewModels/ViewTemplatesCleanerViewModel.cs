@@ -9,7 +9,9 @@
     using Autodesk.Revit.UI;
     using Models;
     using ModPlusAPI;
+    using ModPlusAPI.Enums;
     using ModPlusAPI.Mvvm;
+    using ModPlusAPI.Services;
     using ModPlusStyle.Controls.Dialogs;
     using View;
 
@@ -83,7 +85,7 @@
             RevitCommand.MainWindowInstance.Close();
 
             var doc = _uIApplication.ActiveUIDocument.Document;
-            var transactionName = ModPlusAPI.Language.GetItem(RevitCommand.LangItem, "h18");
+            var transactionName = Language.GetItem(RevitCommand.LangItem, "h18");
             if (string.IsNullOrEmpty(transactionName))
                 transactionName = "Remove view templates";
 
@@ -122,16 +124,15 @@
                 transaction.Commit();
             }
 
-            var report = string.Empty;
+            var resultService = new ResultService();
             if (skipped > 0)
-                report += $"{Language.GetItem(RevitCommand.LangItem, "h19")} {skipped}{Environment.NewLine}";
+                resultService.Add($"{Language.GetItem(RevitCommand.LangItem, "h19")} {skipped}", null, ResultItemType.Info);
             if (removedReferences > 0)
-                report += $"{Language.GetItem(RevitCommand.LangItem, "h21")} {removedReferences}{Environment.NewLine}";
+                resultService.Add($"{Language.GetItem(RevitCommand.LangItem, "h21")} {removedReferences}", null, ResultItemType.Info);
             if (idsToRemove.Count > 0)
-                report += $"{Language.GetItem(RevitCommand.LangItem, "h20")} {idsToRemove.Count}{Environment.NewLine}";
+                resultService.Add($"{Language.GetItem(RevitCommand.LangItem, "h20")} {idsToRemove.Count}", null, ResultItemType.Info);
 
-            if (!string.IsNullOrEmpty(report))
-                ResultWindow.Show(report);
+            resultService.ShowWithoutGrouping();
         }
     }
 }

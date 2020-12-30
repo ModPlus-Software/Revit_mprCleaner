@@ -15,12 +15,15 @@
     using ModPlusStyle.Controls.Dialogs;
     using View;
 
+    /// <summary>
+    /// Шаблоны видов
+    /// </summary>
     public class ViewTemplatesCleanerViewModel : VmBase
     {
         private readonly UIApplication _uIApplication;
-        private List<View> _views;
+        private readonly List<View> _views;
         private int _onUsedTemplate;
-        private List<int> _usedTemplatesIds;
+        private readonly List<int> _usedTemplatesIds;
 
         public ViewTemplatesCleanerViewModel(UIApplication uIApplication)
         {

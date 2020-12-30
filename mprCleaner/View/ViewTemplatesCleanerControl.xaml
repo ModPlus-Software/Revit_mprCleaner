@@ -37,10 +37,10 @@
             <DataGrid.Columns>
                 <DataGridTextColumn 
                     Header="{Binding Source={StaticResource Lang}, XPath=h16}"
-                    Binding="{Binding Path=View.Name, Mode=OneWay}"></DataGridTextColumn>
+                    Binding="{Binding Path=View.Name, Mode=OneWay}"/>
                 <DataGridTextColumn
                     Header="{Binding Source={StaticResource Lang}, XPath=h17}"
-                    Binding="{Binding Path=IsUsedDisplay, Mode=OneWay}"></DataGridTextColumn>
+                    Binding="{Binding Path=IsUsedDisplay, Mode=OneWay}"/>
             </DataGrid.Columns>
         </DataGrid>
 

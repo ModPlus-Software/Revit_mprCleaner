@@ -8,7 +8,7 @@
     xmlns:view="clr-namespace:mprCleaner.View"
     xmlns:viewModels="clr-namespace:mprCleaner.ViewModels"
     mc:Ignorable="d" ResizeMode="CanResizeWithGrip"
-    MinHeight="450" MinWidth="600" Height="450" Width="600"
+    MinHeight="450" MinWidth="600" Height="450" Width="800"
     d:DataContext="{d:DesignInstance viewModels:MainViewModel}">
     <Window.Resources>
         <ResourceDictionary>
@@ -18,12 +18,18 @@
             <XmlDataProvider x:Key="Lang" Source="E:/ModPlus/Languages/en-US.xml" XPath="ModPlus/mprCleaner" />
         </ResourceDictionary>
     </Window.Resources>
-    <TabControl>
-        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h10}">
+    <TabControl TabStripPlacement="Left">
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h10}"
+                 mps:ControlsAssist.HeaderFontSize="12">
             <view:GeneralWipeControl DataContext="{Binding Path=GeneralWipeViewModel}"/>
         </TabItem>
-        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h11}">
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h11}"
+                 mps:ControlsAssist.HeaderFontSize="12">
             <view:ViewTemplatesCleanerControl DataContext="{Binding Path=ViewTemplatesCleanerViewModel}"/>
+        </TabItem>
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h22}"
+                 mps:ControlsAssist.HeaderFontSize="12">
+            <view:SharedParametersCleanerControl DataContext="{Binding Path=SharedParametersCleanerViewModel}"/>
         </TabItem>
     </TabControl>
 </mps:ModPlusWindow>

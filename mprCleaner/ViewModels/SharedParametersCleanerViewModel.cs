@@ -10,6 +10,7 @@
     using Autodesk.Revit.UI;
     using Models;
     using ModPlusAPI;
+    using ModPlusAPI.IO;
     using ModPlusAPI.Mvvm;
     using ModPlusAPI.Windows;
     using View;
@@ -153,7 +154,7 @@
 
                 used = used.Distinct().ToList();
 
-                foreach (var sharedParameterElement in allSharedParameterElements.OrderBy(p => p.Name))
+                foreach (var sharedParameterElement in allSharedParameterElements.OrderBy(p => p.Name, new OrdinalStringComparer()))
                 {
                     if (MainWindow.CancellationTokenSource.IsCancellationRequested)
                         break;

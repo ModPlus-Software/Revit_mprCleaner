@@ -32,6 +32,10 @@
                  mps:ControlsAssist.HeaderFontSize="12">
             <view:ViewFiltersCleanerControl DataContext="{Binding Path=ViewFiltersCleanerViewModel}"/>
         </TabItem>
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h33}"
+                 mps:ControlsAssist.HeaderFontSize="12">
+            <view:SchedulesCleanerControl DataContext="{Binding Path=SchedulesCleanerViewModel}"/>
+        </TabItem>
         <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h22}"
                  mps:ControlsAssist.HeaderFontSize="12">
             <view:SharedParametersCleanerControl DataContext="{Binding Path=SharedParametersCleanerViewModel}"/>

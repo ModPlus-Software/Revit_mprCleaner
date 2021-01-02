@@ -9,6 +9,7 @@
     using Autodesk.Revit.UI;
     using Models;
     using ModPlusAPI;
+    using ModPlusAPI.IO;
     using ModPlusAPI.Mvvm;
     using ModPlusAPI.Windows;
 
@@ -29,7 +30,7 @@
         /// Filters
         /// </summary>
         public ObservableCollection<ViewFilter> ViewFilters { get; private set; }
-        
+
         /// <summary>
         /// Can invoke clean command
         /// </summary>
@@ -39,7 +40,7 @@
         /// Количество выбранных
         /// </summary>
         public int SelectedCount => ViewFilters.Count(i => i.IsSelected);
-        
+
         /// <summary>
         /// Удаление выбранные фильтры
         /// </summary>
@@ -73,53 +74,59 @@
 
         private void CollectFilters()
         {
-            var viewFilters = new List<ViewFilter>();
-            
-            foreach (var view in new FilteredElementCollector(_doc)
-                .OfClass(typeof(View))
-                .Cast<View>()
-                .Where(v => v.AreGraphicsOverridesAllowed()))
+            try
             {
-                foreach (var elementId in view.GetFilters().Where(e => e != ElementId.InvalidElementId))
-                {
-                    var filterElement = _doc.GetElement(elementId);
-                    var existFilter =
-                        viewFilters.FirstOrDefault(f => f.Id.IntegerValue == filterElement.Id.IntegerValue);
-                    if (existFilter != null)
-                    {
-                        if (view.IsTemplate)
-                            existFilter.OwnerViewTemplates.Add(view.Name);
-                        else
-                            existFilter.OwnerViews.Add(view.Name);
-                    }
-                    else
-                    {
-                        var newFilter = new ViewFilter(filterElement);
-                        if (view.IsTemplate)
-                            newFilter.OwnerViewTemplates.Add(view.Name);
-                        else
-                            newFilter.OwnerViews.Add(view.Name);
+                var viewFilters = new List<ViewFilter>();
 
-                        newFilter.PropertyChanged += (sender, args) =>
+                foreach (var view in new FilteredElementCollector(_doc)
+                    .OfClass(typeof(View))
+                    .Cast<View>()
+                    .Where(v => v.AreGraphicsOverridesAllowed()))
+                {
+                    foreach (var elementId in view.GetFilters().Where(e => e != ElementId.InvalidElementId))
+                    {
+                        var filterElement = _doc.GetElement(elementId);
+                        var existFilter =
+                            viewFilters.FirstOrDefault(f => f.Id.IntegerValue == filterElement.Id.IntegerValue);
+                        if (existFilter != null)
                         {
-                            if (args.PropertyName == nameof(ViewFilter.IsSelected))
+                            if (view.IsTemplate)
+                                existFilter.OwnerViewTemplates.Add(view.Name);
+                            else
+                                existFilter.OwnerViews.Add(view.Name);
+                        }
+                        else
+                        {
+                            var newFilter = new ViewFilter(filterElement);
+                            if (view.IsTemplate)
+                                newFilter.OwnerViewTemplates.Add(view.Name);
+                            else
+                                newFilter.OwnerViews.Add(view.Name);
+
+                            newFilter.PropertyChanged += (sender, args) =>
                             {
-                                OnPropertyChanged(nameof(CanClean));
-                                OnPropertyChanged(nameof(SelectedCount));
-                            }
-                        };
-                        
-                        viewFilters.Add(newFilter);
+                                if (args.PropertyName == nameof(ViewFilter.IsSelected))
+                                {
+                                    OnPropertyChanged(nameof(CanClean));
+                                    OnPropertyChanged(nameof(SelectedCount));
+                                }
+                            };
+
+                            viewFilters.Add(newFilter);
+                        }
                     }
                 }
+                
+                ViewFilters = new ObservableCollection<ViewFilter>(
+                    viewFilters.OrderBy(v => v.Name, new OrdinalStringComparer()));
+                OnPropertyChanged(nameof(ViewFilters));
+                OnPropertyChanged(nameof(CanClean));
+                OnPropertyChanged(nameof(SelectedCount));
             }
-            
-            viewFilters.Sort((v1, v2) => string.Compare(v1.Name, v2.Name, StringComparison.Ordinal));
-
-            ViewFilters = new ObservableCollection<ViewFilter>(viewFilters);
-            OnPropertyChanged(nameof(ViewFilters));
-            OnPropertyChanged(nameof(CanClean));
-            OnPropertyChanged(nameof(SelectedCount));
+            catch (Exception exception)
+            {
+                ExceptionBox.Show(exception);
+            }
         }
     }
 }

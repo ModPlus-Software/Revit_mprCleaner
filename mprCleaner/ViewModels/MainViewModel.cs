@@ -14,6 +14,7 @@
             ViewTemplatesCleanerViewModel = new ViewTemplatesCleanerViewModel(uiApplication);
             SharedParametersCleanerViewModel = new SharedParametersCleanerViewModel(uiApplication);
             ViewFiltersCleanerViewModel = new ViewFiltersCleanerViewModel(uiApplication);
+            SchedulesCleanerViewModel = new SchedulesCleanerViewModel(uiApplication);
         }
 
         /// <summary>
@@ -35,5 +36,10 @@
         /// Фильтры видов
         /// </summary>
         public ViewFiltersCleanerViewModel ViewFiltersCleanerViewModel { get; }
+        
+        /// <summary>
+        /// Спецификации
+        /// </summary>
+        public SchedulesCleanerViewModel SchedulesCleanerViewModel { get; }
     }
 }

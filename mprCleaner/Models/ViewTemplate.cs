@@ -2,12 +2,9 @@
 {
     using Autodesk.Revit.DB;
     using ModPlusAPI;
-    using ModPlusAPI.Mvvm;
 
-    public class ViewTemplate : VmBase
+    public class ViewTemplate : BaseSelectable
     {
-        private bool _isSelected;
-        
         public ViewTemplate(View view, bool isUsed)
         {
             View = view;
@@ -30,20 +27,5 @@
         public string IsUsedDisplay => IsUsed 
             ? Language.GetItem(RevitCommand.LangItem, "yes") 
             : Language.GetItem(RevitCommand.LangItem, "no");
-
-        /// <summary>
-        /// Is selected
-        /// </summary>
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                if (_isSelected == value)
-                    return;
-                _isSelected = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

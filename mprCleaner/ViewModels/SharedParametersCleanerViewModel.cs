@@ -95,7 +95,12 @@
         /// <summary>
         /// Can invoke clean command
         /// </summary>
-        public bool CanClean => SharedParameters.Any(p => p.IsChecked);
+        public bool CanClean => SharedParameters.Any(p => p.IsSelected);
+        
+        /// <summary>
+        /// Количество выбранных
+        /// </summary>
+        public int SelectedCount => SharedParameters.Count(i => i.IsSelected);
 
         /// <summary>
         /// Can invoke search
@@ -158,8 +163,11 @@
                     var sharedParameter = new SharedParameter(sharedParameterElement);
                     sharedParameter.PropertyChanged += (sender, args) =>
                     {
-                        if (args.PropertyName == nameof(SharedParameter.IsChecked))
+                        if (args.PropertyName == nameof(SharedParameter.IsSelected))
+                        {
                             OnPropertyChanged(nameof(CanClean));
+                            OnPropertyChanged(nameof(SelectedCount));
+                        }
                     };
 
                     SharedParameters.Add(sharedParameter);
@@ -176,38 +184,16 @@
                 CanSearch = true;
             }
         });
-
-        /// <summary>
-        /// Check all shared parameters
-        /// </summary>
-        public ICommand CheckAllCommand => new RelayCommandWithoutParameter(() =>
-        {
-            foreach (var sharedParameter in SharedParameters)
-            {
-                sharedParameter.IsChecked = true;
-            }
-        });
         
-        /// <summary>
-        /// Uncheck all shared parameters
-        /// </summary>
-        public ICommand UncheckAllCommand => new RelayCommandWithoutParameter(() =>
-        {
-            foreach (var sharedParameter in SharedParameters)
-            {
-                sharedParameter.IsChecked = false;
-            }
-        });
-
         /// <summary>
         /// Удаление отмеченных параметров
         /// </summary>
-        public ICommand RemoveCheckedParametersCommand => new RelayCommandWithoutParameter(() =>
+        public ICommand RemoveSelectedParametersCommand => new RelayCommandWithoutParameter(() =>
         {
             try
             {
                 var elementIds = SharedParameters
-                    .Where(p => p.IsChecked)
+                    .Where(p => p.IsSelected)
                     .Select(p => p.OriginSharedParameterElement.Id)
                     .ToList();
 

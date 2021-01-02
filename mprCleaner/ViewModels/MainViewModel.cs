@@ -13,6 +13,7 @@
             GeneralWipeViewModel = new GeneralWipeViewModel(uiApplication);
             ViewTemplatesCleanerViewModel = new ViewTemplatesCleanerViewModel(uiApplication);
             SharedParametersCleanerViewModel = new SharedParametersCleanerViewModel(uiApplication);
+            ViewFiltersCleanerViewModel = new ViewFiltersCleanerViewModel(uiApplication);
         }
 
         /// <summary>
@@ -29,5 +30,10 @@
         /// Неиспользуемые общие параметры
         /// </summary>
         public SharedParametersCleanerViewModel SharedParametersCleanerViewModel { get; }
+        
+        /// <summary>
+        /// Фильтры видов
+        /// </summary>
+        public ViewFiltersCleanerViewModel ViewFiltersCleanerViewModel { get; }
     }
 }

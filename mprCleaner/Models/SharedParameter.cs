@@ -2,15 +2,12 @@
 {
     using System;
     using Autodesk.Revit.DB;
-    using ModPlusAPI.Mvvm;
 
     /// <summary>
     /// Общий параметр
     /// </summary>
-    public class SharedParameter : VmBase
+    public class SharedParameter : BaseSelectable
     {
-        private bool _isChecked;
-        
         public SharedParameter(SharedParameterElement sharedParameterElement)
         {
             OriginSharedParameterElement = sharedParameterElement;
@@ -32,20 +29,5 @@
         /// Guid
         /// </summary>
         public Guid Guid { get; }
-
-        /// <summary>
-        /// Элемент отмечен
-        /// </summary>
-        public bool IsChecked
-        {
-            get => _isChecked;
-            set
-            {
-                if (_isChecked == value)
-                    return;
-                _isChecked = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

@@ -18,7 +18,8 @@
             <XmlDataProvider x:Key="Lang" Source="E:/ModPlus/Languages/en-US.xml" XPath="ModPlus/mprCleaner" />
         </ResourceDictionary>
     </Window.Resources>
-    <TabControl TabStripPlacement="Left">
+    <TabControl TabStripPlacement="Left"
+                mps:TabControlAssist.Underlined="TabPanel">
         <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h10}"
                  mps:ControlsAssist.HeaderFontSize="12">
             <view:GeneralWipeControl DataContext="{Binding Path=GeneralWipeViewModel}"/>
@@ -26,6 +27,10 @@
         <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h11}"
                  mps:ControlsAssist.HeaderFontSize="12">
             <view:ViewTemplatesCleanerControl DataContext="{Binding Path=ViewTemplatesCleanerViewModel}"/>
+        </TabItem>
+        <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h29}"
+                 mps:ControlsAssist.HeaderFontSize="12">
+            <view:ViewFiltersCleanerControl DataContext="{Binding Path=ViewFiltersCleanerViewModel}"/>
         </TabItem>
         <TabItem Header="{Binding Source={StaticResource Lang}, XPath=h22}"
                  mps:ControlsAssist.HeaderFontSize="12">

@@ -1,6 +1,5 @@
 ﻿namespace mprCleaner.ViewModels
 {
-    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -13,7 +12,6 @@
     using ModPlusAPI.Mvvm;
     using ModPlusAPI.Services;
     using ModPlusStyle.Controls.Dialogs;
-    using View;
 
     /// <summary>
     /// Шаблоны видов
@@ -43,7 +41,20 @@
                 .ToList();
 
             var viewTemplates = templates
-                .Select(view => new ViewTemplate(view, _usedTemplatesIds.Contains(view.Id.IntegerValue)));
+                .Select(view => new ViewTemplate(view, _usedTemplatesIds.Contains(view.Id.IntegerValue)))
+                .ToList();
+            
+            foreach (var viewTemplate in viewTemplates)
+            {
+                viewTemplate.PropertyChanged += (sender, args) =>
+                {
+                    if (args.PropertyName == nameof(ViewTemplate.IsSelected))
+                    {
+                        OnPropertyChanged(nameof(CanClean));
+                        OnPropertyChanged(nameof(SelectedCount));
+                    }
+                };
+            }
 
             ViewTemplates = 
                 new ObservableCollection<ViewTemplate>(viewTemplates.OrderBy(v => v.View.Name, new ModPlusAPI.IO.OrdinalStringComparer()));
@@ -53,6 +64,16 @@
         }
 
         public ObservableCollection<ViewTemplate> ViewTemplates { get; }
+        
+        /// <summary>
+        /// Can invoke clean command
+        /// </summary>
+        public bool CanClean => ViewTemplates.Any(p => p.IsSelected);
+        
+        /// <summary>
+        /// Количество выбранных
+        /// </summary>
+        public int SelectedCount => ViewTemplates.Count(i => i.IsSelected);
 
         /// <summary>
         /// 0 - skip, 1 - remove reference

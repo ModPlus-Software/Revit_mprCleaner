@@ -83,37 +83,45 @@
                     .Cast<View>()
                     .Where(v => v.AreGraphicsOverridesAllowed()))
                 {
-                    foreach (var elementId in view.GetFilters().Where(e => e != ElementId.InvalidElementId))
+                    try
                     {
-                        var filterElement = _doc.GetElement(elementId);
-                        var existFilter =
-                            viewFilters.FirstOrDefault(f => f.Id.IntegerValue == filterElement.Id.IntegerValue);
-                        if (existFilter != null)
+                        foreach (var elementId in view.GetFilters().Where(e => e != ElementId.InvalidElementId))
                         {
-                            if (view.IsTemplate)
-                                existFilter.OwnerViewTemplates.Add(view.Name);
-                            else
-                                existFilter.OwnerViews.Add(view.Name);
-                        }
-                        else
-                        {
-                            var newFilter = new ViewFilter(filterElement);
-                            if (view.IsTemplate)
-                                newFilter.OwnerViewTemplates.Add(view.Name);
-                            else
-                                newFilter.OwnerViews.Add(view.Name);
-
-                            newFilter.PropertyChanged += (sender, args) =>
+                            var filterElement = _doc.GetElement(elementId);
+                            var existFilter =
+                                viewFilters.FirstOrDefault(f => f.Id.IntegerValue == filterElement.Id.IntegerValue);
+                            if (existFilter != null)
                             {
-                                if (args.PropertyName == nameof(ViewFilter.IsSelected))
-                                {
-                                    OnPropertyChanged(nameof(CanClean));
-                                    OnPropertyChanged(nameof(SelectedCount));
-                                }
-                            };
+                                if (view.IsTemplate)
+                                    existFilter.OwnerViewTemplates.Add(view.Name);
+                                else
+                                    existFilter.OwnerViews.Add(view.Name);
+                            }
+                            else
+                            {
+                                var newFilter = new ViewFilter(filterElement);
+                                if (view.IsTemplate)
+                                    newFilter.OwnerViewTemplates.Add(view.Name);
+                                else
+                                    newFilter.OwnerViews.Add(view.Name);
 
-                            viewFilters.Add(newFilter);
+                                newFilter.PropertyChanged += (sender, args) =>
+                                {
+                                    if (args.PropertyName == nameof(ViewFilter.IsSelected))
+                                    {
+                                        OnPropertyChanged(nameof(CanClean));
+                                        OnPropertyChanged(nameof(SelectedCount));
+                                    }
+                                };
+
+                                viewFilters.Add(newFilter);
+                            }
                         }
+                    }
+                    catch (Autodesk.Revit.Exceptions.InvalidOperationException)
+                    {
+                        // ignore exceptions "View does not belong to a project document" and
+                        // "The view type does not support Visibility/Graphics Overriddes"
                     }
                 }
                 

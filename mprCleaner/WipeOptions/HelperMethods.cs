@@ -19,27 +19,26 @@
 
             using (var tr = new Transaction(uiDoc, actionTitle))
             {
-                if (tr.Start() == TransactionStatus.Started)
-                {
-                    foreach (var elementToRemove in elementIdsToRemove)
-                    {
-                        if (RemoveElement(elementToRemove, uiDoc))
-                            count++;
-                    }
+                tr.Start();
 
-                    if (tr.Commit() == TransactionStatus.Committed)
-                        return count;
-                    
-                    tr.RollBack();
+                foreach (var elementToRemove in elementIdsToRemove)
+                {
+                    if (RemoveElement(elementToRemove, uiDoc))
+                        count++;
                 }
+
+                tr.Commit();
+
+                var status = tr.GetStatus();
+
+                if (status == TransactionStatus.Committed)
+                    return count;
+                
+                if (status == TransactionStatus.Started)
+                    tr.RollBack();
             }
 
             return 0;
-        }
-
-        private static bool RemoveElement(Element element, Document uiDoc)
-        {
-            return RemoveElement(element.Id, uiDoc);
         }
 
         private static bool RemoveElement(ElementId elementId, Document uiDoc)
